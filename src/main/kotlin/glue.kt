@@ -10,8 +10,8 @@ external object ChatLib {
     fun clearChat(vararg chatLineIDs: Int)
     fun getChatBreak(separator: String = definedExternally): String
     fun getChatWidth(): Int
-    fun removeFormatting(text: String)
-    fun replaceFormatting(text: String)
+    fun removeFormatting(text: String): String
+    fun replaceFormatting(text: String): String
     fun getCenteredText(text: String): String
     fun editChat(regexp: dynamic, vararg replacements: Message)
     fun editChat(toReplace: String, vararg replacements: Message)
@@ -33,55 +33,55 @@ external object EventLib {
 external object FileLib {
     fun write(importName: String, fileName: String, toWrite: String)
     fun write(fileLocation: String, toWrite: String)
-    fun read(importName: String, fileName: String)
-    fun read(fileLocation: String)
+    fun read(importName: String, fileName: String): String?
+    fun read(fileLocation: String): String?
     fun read(file: dynamic): String?
     fun getUrlContent(theUrl: String, userAgent: String? = definedExternally): String
     fun deleteDirectory(dir: dynamic): Boolean
     fun unzip(zipFilePath: String, destDirectory: String)
 }
 external object MathLib {
-    fun map(number: Float, in_min: Float, in_max: Float, out_min: Float, out_max: Float)
-    fun clampFloat(number: Float, min: Float, max: Float)
-    fun clamp(number: Int, min: Int, max: Int)
+    fun map(number: Float, in_min: Float, in_max: Float, out_min: Float, out_max: Float): Float
+    fun clampFloat(number: Float, min: Float, max: Float): Float
+    fun clamp(number: Int, min: Int, max: Int): Int
 }
 external class Image(image: dynamic) {
-    fun getTextureWidth()
-    fun getTextureHeight()
+    fun getTextureWidth(): Int
+    fun getTextureHeight(): Int
     fun getTexture(): dynamic
     fun onRender(event: dynamic)
-    fun draw(x: Double, y: Double, width: Double = definedExternally, height: Double = definedExternally)
+    fun draw(x: Double, y: Double, width: Double = definedExternally, height: Double = definedExternally): Image
 }
 external class Rectangle(color: Int, x: Float, y: Float, width: Float, height: Float) {
-    fun getColor()
-    fun setColor(color: Int)
-    fun getX()
-    fun setX(x: Float)
-    fun getY()
-    fun setY(y: Float)
-    fun getWidth()
-    fun setWidth(width: Float)
-    fun getHeight()
-    fun setHeight(height: Float)
-    fun isShadow()
-    fun setShadow(shadow: Boolean)
-    fun getShadowOffset()
-    fun getShadowOffsetX()
-    fun getShadowOffsetY()
-    fun setShadowOffset(x: Float, y: Float)
-    fun setShadowOffsetX(x: Float)
-    fun setShadowOffsetY(y: Float)
-    fun getShadowColor()
-    fun setShadowColor(color: Int)
-    fun setShadow(color: Int, x: Float, y: Float)
-    fun getOutline()
-    fun setOutline(outline: Boolean)
-    fun getOutlineColor()
-    fun setOutlineColor(color: Int)
-    fun getThickness()
-    fun setThickness(thickness: Float)
-    fun setOutline(color: Int, thickness: Float)
-    fun draw()
+    fun getColor(): Int
+    fun setColor(color: Int): Rectangle
+    fun getX(): Float
+    fun setX(x: Float): Rectangle
+    fun getY(): Float
+    fun setY(y: Float): Rectangle
+    fun getWidth(): Float
+    fun setWidth(width: Float): Rectangle
+    fun getHeight(): Float
+    fun setHeight(height: Float): Rectangle
+    fun isShadow(): Boolean
+    fun setShadow(shadow: Boolean): Rectangle
+    fun getShadowOffset(): dynamic
+    fun getShadowOffsetX(): Float
+    fun getShadowOffsetY(): Float
+    fun setShadowOffset(x: Float, y: Float): Rectangle
+    fun setShadowOffsetX(x: Float): Rectangle
+    fun setShadowOffsetY(y: Float): Rectangle
+    fun getShadowColor(): Int
+    fun setShadowColor(color: Int): Rectangle
+    fun setShadow(color: Int, x: Float, y: Float): Rectangle
+    fun getOutline(): Boolean
+    fun setOutline(outline: Boolean): Rectangle
+    fun getOutlineColor(): Int
+    fun setOutlineColor(color: Int): Rectangle
+    fun getThickness(): Float
+    fun setThickness(thickness: Float): Rectangle
+    fun setOutline(color: Int, thickness: Float): Rectangle
+    fun draw(): Rectangle
 }
 external object Renderer {
     fun getColor(color: Int): Int
@@ -95,10 +95,10 @@ external object Renderer {
     fun rotate(angle: Float)
     fun colorize(red: Int, green: Int, blue: Int, alpha: Int = definedExternally)
     fun image(name: String, url: String): Image?
-    fun text(text: String, x: Float, y: Float)
-    fun text(text: String)
-    fun rectangle(color: Int, x: Float, y: Float, width: Float, height: Float)
-    fun shape(color: Int)
+    fun text(text: String, x: Float, y: Float): Text
+    fun text(text: String): Text
+    fun rectangle(color: Int, x: Float, y: Float, width: Float, height: Float): Rectangle
+    fun shape(color: Int): Shape
     fun drawRect(color: Int, x: Float, y: Float, width: Float, height: Float)
     fun drawString(text: String, x: Float, y: Float)
     fun drawStringWithShadow(text: String, x: Float, y: Float)
@@ -112,56 +112,57 @@ external object Renderer {
     }
 }
 external class Shape(color: Int) {
-    fun copy()
+    fun copy(): Shape
     fun clone(): Shape
-    fun getColor()
-    fun setColor(color: Int)
-    fun getDrawMode()
-    fun setDrawMode(drawMode: Int)
-    fun addVertex(x: Float, y: Float)
-    fun insertVertex(index: Int, x: Float, y: Float)
-    fun removeVertex(index: Int)
-    fun setLine(x1: Float, y1: Float, x2: Float, y2: Float, thickness: Float)
-    fun setCircle(x: Float, y: Float, radius: Float, steps: Int)
-    fun draw()
+    fun getColor(): Int
+    fun setColor(color: Int): Shape
+    fun getDrawMode(): Int
+    fun setDrawMode(drawMode: Int): Shape
+    fun getVertexes(): List<dynamic>
+    fun addVertex(x: Float, y: Float): Shape
+    fun insertVertex(index: Int, x: Float, y: Float): Shape
+    fun removeVertex(index: Int): Shape
+    fun setLine(x1: Float, y1: Float, x2: Float, y2: Float, thickness: Float): Shape
+    fun setCircle(x: Float, y: Float, radius: Float, steps: Int): Shape
+    fun draw(): Shape
 }
 external class Text(string: String, x: Float = definedExternally, y: Float = definedExternally) {
-    fun getString()
-    fun setString(string: String)
-    fun getColor()
-    fun setColor(color: Int)
-    fun getFormatted()
-    fun setFormatted(formatted: Boolean)
-    fun getShadow()
-    fun setShadow(shadow: Boolean)
-    fun getAlign()
-    fun setAlign(align: Any)
-    fun getX()
-    fun setX(x: Float)
-    fun getY()
-    fun setY(y: Float)
-    fun getWidth()
-    fun setWidth(width: Int)
-    fun getLines()
-    fun getMaxLines()
-    fun setMaxLines(maxLines: Int)
-    fun getScale()
-    fun setScale(scale: Float)
+    fun getString(): String
+    fun setString(string: String): Text
+    fun getColor(): Int
+    fun setColor(color: Int): Text
+    fun getFormatted(): Boolean
+    fun setFormatted(formatted: Boolean): Text
+    fun getShadow(): Boolean
+    fun setShadow(shadow: Boolean): Text
+    fun getAlign(): DisplayHandler.Align
+    fun setAlign(align: Any): Text
+    fun getX(): Float
+    fun setX(x: Float): Text
+    fun getY(): Float
+    fun setY(y: Float): Text
+    fun getWidth(): Int
+    fun setWidth(width: Int): Text
+    fun getLines(): List<String>
+    fun getMaxLines(): Int
+    fun setMaxLines(maxLines: Int): Text
+    fun getScale(): Float
+    fun setScale(scale: Float): Text
     fun getMaxWidth(): Int
     fun getHeight(): Float
     fun exceedsMaxLines(): Boolean
-    fun draw(x: Float? = definedExternally, y: Float? = definedExternally)
+    fun draw(x: Float? = definedExternally, y: Float? = definedExternally): Text
     override fun toString(): String
 }
 external object Tessellator {
-    fun bindTexture(texture: Image)
-    fun begin(drawMode: Int = definedExternally, textured: Boolean = definedExternally)
-    fun colorize(red: Float, green: Float, blue: Float, alpha: Float = definedExternally)
-    fun rotate(angle: Float, x: Float, y: Float, z: Float)
-    fun translate(x: Float, y: Float, z: Float)
-    fun scale(x: Float, y: Float = definedExternally, z: Float = definedExternally)
-    fun pos(x: Float, y: Float, z: Float)
-    fun tex(u: Float, v: Float)
+    fun bindTexture(texture: Image): Tessellator
+    fun begin(drawMode: Int = definedExternally, textured: Boolean = definedExternally): Tessellator
+    fun colorize(red: Float, green: Float, blue: Float, alpha: Float = definedExternally): Tessellator
+    fun rotate(angle: Float, x: Float, y: Float, z: Float): Tessellator
+    fun translate(x: Float, y: Float, z: Float): Tessellator
+    fun scale(x: Float, y: Float = definedExternally, z: Float = definedExternally): Tessellator
+    fun pos(x: Float, y: Float, z: Float): Tessellator
+    fun tex(u: Float, v: Float): Tessellator
     fun draw()
     fun drawString(text: String, x: Float, y: Float, z: Float, renderBlackBox: Boolean, partialTicks: Float, scale: Float, color: Int, increase: Boolean)
 }
@@ -184,44 +185,44 @@ external class Book(bookName: String) {
 external object CPS {
     fun update(event: dynamic)
     fun click(event: dynamic)
-    fun getLeftClicksMax()
-    fun getRightClicksMax()
-    fun getLeftClicks()
-    fun getRightClicks()
+    fun getLeftClicksMax(): Int
+    fun getRightClicksMax(): Int
+    fun getLeftClicks(): Int
+    fun getRightClicks(): Int
     fun getLeftClicksAverage(): Int
     fun getRightClicksAverage(): Int
 }
 abstract external class Display {
     constructor()
     constructor(any: dynamic)
-    fun getBackgroundColor()
-    fun setBackgroundColor(backgroundColor: Int)
-    fun getTextColor()
-    fun setTextColor(textColor: Int)
-    fun getBackground()
-    fun setBackground(background: Any)
-    fun getAlign()
-    fun setAlign(align: Any)
-    fun getOrder()
-    fun setOrder(order: Any)
-    fun setLine(index: Int, line: Any)
-    fun getLine(index: Int)
-    fun getLines()
-    fun setLines(lines: MutableList<DisplayLine>)
+    fun getBackgroundColor(): Int
+    fun setBackgroundColor(backgroundColor: Int): Display
+    fun getTextColor(): Int
+    fun setTextColor(textColor: Int): Display
+    fun getBackground(): DisplayHandler.Background
+    fun setBackground(background: Any): Display
+    fun getAlign(): DisplayHandler.Align
+    fun setAlign(align: Any): Display
+    fun getOrder(): DisplayHandler.Order
+    fun setOrder(order: Any): Display
+    fun setLine(index: Int, line: Any): Display
+    fun getLine(index: Int): DisplayLine
+    fun getLines(): List<DisplayLine>
+    fun setLines(lines: MutableList<DisplayLine>): Display
     fun addLine(index: Int = definedExternally, line: Any)
-    fun addLines(vararg lines: Any)
-    fun clearLines()
-    fun getRenderX()
-    fun setRenderX(renderX: Float)
-    fun getRenderY()
-    fun setRenderY(renderY: Float)
-    fun setRenderLoc(renderX: Float, renderY: Float)
-    fun getShouldRender()
-    fun setShouldRender(shouldRender: Boolean)
-    fun getWidth()
-    fun getHeight()
-    fun getMinWidth()
-    fun setMinWidth(minWidth: Float)
+    fun addLines(vararg lines: Any): Display
+    fun clearLines(): Display
+    fun getRenderX(): Float
+    fun setRenderX(renderX: Float): Display
+    fun getRenderY(): Float
+    fun setRenderY(renderY: Float): Display
+    fun setRenderLoc(renderX: Float, renderY: Float): Display
+    fun getShouldRender(): Boolean
+    fun setShouldRender(shouldRender: Boolean): Display
+    fun getWidth(): Float
+    fun getHeight(): Float
+    fun getMinWidth(): Float
+    fun setMinWidth(minWidth: Float): Display
     fun render()
     override fun toString(): String
 }
@@ -242,19 +243,19 @@ external object DisplayHandler {
 abstract external class DisplayLine {
     constructor(text: String)
     constructor(text: String, config: dynamic)
-    fun getText()
-    fun setText(text: String)
-    fun getTextColor()
-    fun setTextColor(color: Int)
-    fun getTextWidth()
-    fun setShadow(shadow: Boolean)
-    fun setScale(scale: Float)
-    fun getAlign()
-    fun setAlign(align: Any?)
-    fun getBackground()
-    fun setBackground(background: Any?)
-    fun getBackgroundColor()
-    fun setBackgroundColor(color: Int)
+    fun getText(): Text
+    fun setText(text: String): DisplayLine
+    fun getTextColor(): Int?
+    fun setTextColor(color: Int): DisplayLine
+    fun getTextWidth(): Float
+    fun setShadow(shadow: Boolean): DisplayLine
+    fun setScale(scale: Float): DisplayLine
+    fun getAlign(): DisplayHandler.Align?
+    fun setAlign(align: Any?): DisplayLine
+    fun getBackground(): DisplayHandler.Background?
+    fun setBackground(background: Any?): DisplayLine
+    fun getBackgroundColor(): Int?
+    fun setBackgroundColor(color: Int): DisplayLine
     fun registerClicked(method: Any)
     fun registerHovered(method: Any)
     fun registerDragged(method: Any)
@@ -283,7 +284,7 @@ abstract external class Gui  {
     fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float)
     fun keyTyped(typedChar: Char, keyCode: Int)
     fun doesGuiPauseGame()
-    fun setDoesPauseGame(doesPauseGame: Boolean)
+    fun setDoesPauseGame(doesPauseGame: Boolean): Gui
     fun addButton(buttonId: Int, x: Int, y: Int, buttonText: String)
     fun addButton(buttonId: Int, x: Int, y: Int, width: Int = definedExternally, height: Int = definedExternally, buttonText: String)
     fun setButtonVisibility(buttonId: Int, visible: Boolean)
@@ -296,9 +297,9 @@ external object GuiHandler {
 external class KeyBind {
     constructor(description: String, keyCode: Int)
     constructor(any: dynamic)
-    fun isKeyDown()
-    fun isPressed()
-    fun getKeyCode()
+    fun isKeyDown(): Boolean
+    fun isPressed(): Boolean
+    fun getKeyCode(): Int
     fun setState(pressed: Boolean)
     fun clearKeyBinds()
 }
@@ -307,17 +308,17 @@ external class Message {
     constructor(messageParts: ArrayList<Any>)
     constructor(vararg components: Any)
     fun getChatMessage(): dynamic
-    fun getMessageParts()
-    fun getChatLineId()
-    fun setChatLineId(id: Int)
-    fun isRecursive()
-    fun setRecursive(recursive: Boolean)
-    fun isFormatted()
-    fun setFormatted(formatted: Boolean)
-    fun setTextComponent(index: Int, component: Any)
-    fun addTextComponent(component: Any)
-    fun addTextComponent(index: Int, component: Any)
-    fun clone()
+    fun getMessageParts(): List<TextComponent>
+    fun getChatLineId(): Int
+    fun setChatLineId(id: Int): Message
+    fun isRecursive(): Boolean
+    fun setRecursive(recursive: Boolean): Message
+    fun isFormatted(): Boolean
+    fun setFormatted(formatted: Boolean): Message
+    fun setTextComponent(index: Int, component: Any): Message
+    fun addTextComponent(component: Any): Message
+    fun addTextComponent(index: Int, component: Any): Message
+    fun clone(): Message
     fun copy(): Message
     fun edit(vararg replacements: Message)
     fun chat()
@@ -326,38 +327,38 @@ external class Message {
 external class TextComponent {
     constructor(text: String)
     constructor(any: dynamic)
-    fun getText()
-    fun setText(text: String)
-    fun isFormatted()
-    fun setFormatted(formatted: Boolean)
-    fun setClick(action: String, value: String)
-    fun getClickAction()
-    fun setClickAction(action: String)
-    fun getClickValue()
-    fun setClickValue(value: String)
-    fun setHover(action: String, value: String)
-    fun getHoverAction()
-    fun setHoverAction(action: String)
-    fun getHoverValue()
-    fun setHoverValue(value: String)
+    fun getText(): String
+    fun setText(text: String): TextComponent
+    fun isFormatted(): Boolean
+    fun setFormatted(formatted: Boolean): TextComponent
+    fun setClick(action: String, value: String): TextComponent
+    fun getClickAction(): String?
+    fun setClickAction(action: String): TextComponent
+    fun getClickValue(): String?
+    fun setClickValue(value: String): TextComponent
+    fun setHover(action: String, value: String): TextComponent
+    fun getHoverAction(): String?
+    fun setHoverAction(action: String): TextComponent
+    fun getHoverValue(): String?
+    fun setHoverValue(value: String): TextComponent
     fun chat()
     fun actionBar()
 }
 external class ParticleEffect(x: Double, y: Double, z: Double, xSpeed: Double = definedExternally, ySpeed: Double = definedExternally, zSpeed: Double = definedExternally)  {
-    fun scale(scale: Float)
-    fun multiplyVelocity(multiplier: Float)
-    fun setColor(r: Float, g: Float, b: Float, a: Float? = definedExternally)
-    fun setColor(color: Int)
-    fun setAlpha(a: Float)
-    fun remove()
+    fun scale(scale: Float): ParticleEffect
+    fun multiplyVelocity(multiplier: Float): ParticleEffect
+    fun setColor(r: Float, g: Float, b: Float, a: Float? = definedExternally): ParticleEffect
+    fun setColor(color: Int): ParticleEffect
+    fun setAlpha(a: Float): ParticleEffect
+    fun remove(): ParticleEffect
 }
 external class Sound(config: dynamic) {
     fun onWorldLoad()
-    fun setCategory(category: String)
-    fun setVolume(volume: Float)
-    fun setPosition(x: Float, y: Float, z: Float)
-    fun setPitch(pitch: Float)
-    fun setAttenuation(model: Int)
+    fun setCategory(category: String): Sound
+    fun setVolume(volume: Float): Sound
+    fun setPosition(x: Float, y: Float, z: Float): Sound
+    fun setPitch(pitch: Float): Sound
+    fun setAttenuation(model: Int): Sound
     fun play()
     fun pause()
     fun stop()
@@ -401,62 +402,62 @@ open external class Block {
     constructor(blockName: String)
     constructor(blockID: Int)
     constructor(item: Item)
-    fun setBlockPos(blockPos: dynamic)
-    fun getID()
+    fun setBlockPos(blockPos: dynamic): Block
+    fun getID(): Int
     fun getRegistryName(): String
-    fun getUnlocalizedName()
+    fun getUnlocalizedName(): String
     fun getName(): String
     fun getLightValue(): Int
     fun getState(): dynamic
     fun getDefaultState(): dynamic
-    fun getX()
-    fun getY()
-    fun getZ()
-    fun getMetadata()
-    fun getDefaultMetadata()
+    fun getX(): Int
+    fun getY(): Int
+    fun getZ(): Int
+    fun getMetadata(): Int
+    fun getDefaultMetadata(): Int
     fun canProvidePower(): Boolean
-    fun isPowered()
-    fun getRedstoneStrength()
-    fun canBeHarvested()
-    fun canBeHarvestedWith(item: Item)
+    fun isPowered(): Boolean
+    fun getRedstoneStrength(): Int
+    fun canBeHarvested(): Boolean
+    fun canBeHarvestedWith(item: Item): Boolean
     fun isTranslucent(): Boolean
     override fun toString(): String
 }
 external class Sign(block: Block) : Block {
-    fun getLines()
-    fun getFormattedLines()
-    fun getUnformattedLines()
+    fun getLines(): List<Message>
+    fun getFormattedLines(): List<String>
+    fun getUnformattedLines(): List<String>
     override fun toString(): String
 }
 external class Chunk(chunk: dynamic) {
-    fun getAllEntities()
-    fun getAllEntitiesOfType(clazz: dynamic)
+    fun getAllEntities(): List<Entity>
+    fun getAllEntitiesOfType(clazz: dynamic): List<Entity>
 }
 open external class Entity(entity: dynamic) {
     fun getX()
     fun getY()
     fun getZ()
-    fun getPitch()
-    fun getYaw()
-    fun getMotionX()
-    fun getMotionY()
-    fun getMotionZ()
-    fun getHP()
+    fun getPitch(): Double
+    fun getYaw(): Double
+    fun getMotionX(): Double
+    fun getMotionY(): Double
+    fun getMotionZ(): Double
+    fun getHP(): Float
     fun getRiding(): Entity?
     fun getRider(): Entity?
     fun getRiders(): List<Entity>
-    fun isDead()
-    fun getWidth()
-    fun getHeight()
-    fun getEyeHeight()
+    fun isDead(): Boolean
+    fun getWidth(): Float
+    fun getHeight(): Float
+    fun getEyeHeight(): Float
     open fun getName(): String
-    fun getClassName()
-    fun getUUID()
+    fun getClassName(): String
+    fun getUUID(): dynamic
     override fun toString(): String
 }
 abstract external class Action(slot: Int, windowId: Int) {
-    fun setSlot(slot: Int)
-    fun setWindowId(windowId: Int)
+    fun setSlot(slot: Int): Action
+    fun setWindowId(windowId: Int): Action
     abstract fun complete()
     fun doClick(button: Int, mode: Int)
     fun of(inventory: Inventory, slot: Int, typeString: String)
@@ -465,25 +466,25 @@ abstract external class Action(slot: Int, windowId: Int) {
     }
 }
 external class ClickAction(slot: Int, windowId: Int) : Action {
-    fun getClickType()
-    fun setClickType(clickType: ClickType)
-    fun getHoldingShift()
-    fun setHoldingShift(holdingShift: Boolean)
-    fun getItemInHand()
-    fun setItemInHand(itemInHand: Boolean)
-    fun setClickString(clickType: String)
+    fun getClickType(): ClickType
+    fun setClickType(clickType: ClickType): ClickAction
+    fun getHoldingShift(): Boolean
+    fun setHoldingShift(holdingShift: Boolean): ClickAction
+    fun getItemInHand(): Boolean
+    fun setItemInHand(itemInHand: Boolean): ClickAction
+    fun setClickString(clickType: String): ClickAction
     override fun complete()
     enum class ClickType {
         LEFT, RIGHT, MIDDLE;
     }
 }
 external class DragAction(slot: Int, windowId: Int) : Action {
-    fun getClickType()
-    fun setClickType(clickType: ClickType)
-    fun getStage()
-    fun setStage(stage: Stage)
-    fun setClickString(clickType: String)
-    fun setStageString(stage: String)
+    fun getClickType(): ClickType
+    fun setClickType(clickType: ClickType): DragAction
+    fun getStage(): Stage
+    fun setStage(stage: Stage): DragAction
+    fun setClickString(clickType: String): DragAction
+    fun setStageString(stage: String): DragAction
     override fun complete()
     enum class ClickType {
         LEFT, RIGHT, MIDDLE;
@@ -493,29 +494,29 @@ external class DragAction(slot: Int, windowId: Int) : Action {
     }
 }
 external class DropAction(slot: Int, windowId: Int) : Action {
-    fun getHoldingCtrl()
-    fun setHoldingCtrl(holdingCtrl: Boolean)
+    fun getHoldingCtrl(): Boolean
+    fun setHoldingCtrl(holdingCtrl: Boolean): DropAction
     override fun complete()
 }
 external class KeyAction(slot: Int, windowId: Int) : Action {
-    fun getKey()
-    fun setKey(key: Int)
+    fun getKey(): Int
+    fun setKey(key: Int): KeyAction
     override fun complete()
 }
 external class Inventory {
     constructor(any: dynamic)
-    fun getSize()
-    fun getStackInSlot(slot: Int)
-    fun getWindowId()
+    fun getSize(): Int
+    fun getStackInSlot(slot: Int): Item
+    fun getWindowId(): Int
     fun doAction(action: Action)
-    fun isItemValidForSlot(slot: Int, item: Item)
-    fun contains(item: Item)
-    fun indexOf(item: Item)
-    fun isContainer()
-    fun click(slot: Int, shift: Boolean)
-    fun drop(slot: Int, ctrl: Boolean)
-    fun drag(type: String, vararg slots: Int)
-    fun getName()
+    fun isItemValidForSlot(slot: Int, item: Item): Boolean
+    fun contains(item: Item): Boolean
+    fun indexOf(item: Item): Int
+    fun isContainer(): Boolean
+    fun click(slot: Int, shift: Boolean): Inventory
+    fun drop(slot: Int, ctrl: Boolean): Inventory
+    fun drag(type: String, vararg slots: Int): Inventory
+    fun getName(): String
     fun getClassName(): String
     override fun toString(): String
 }
@@ -525,25 +526,25 @@ external class Item {
     constructor(itemID: Int)
     constructor(block: Block)
     constructor(entity: Entity)
-    fun getID()
-    fun setStackSize(stackSize: Int)
+    fun getID(): Int
+    fun setStackSize(stackSize: Int): Item
     fun getStackSize(): Int
-    fun getUnlocalizedName()
+    fun getUnlocalizedName(): String
     fun getRegistryName(): String
     fun getName(): String
     fun getEnchantments(): Map<String,Int>
-    fun isEnchantable()
-    fun isEnchanted()
-    fun getItemNBT()
-    fun getMetadata()
-    fun canPlaceOn(block: Block)
+    fun isEnchantable(): Boolean
+    fun isEnchanted(): Boolean
+    fun getItemNBT(): String
+    fun getMetadata(): Int
+    fun canPlaceOn(block: Block): Boolean
     fun canHarvest(block: Block): Boolean
-    fun canDestroy(block: Block)
-    fun getDurability()
-    fun getDamage()
-    fun setDamage(damage: Int)
-    fun getMaxDamage()
-    fun isDamagable()
+    fun canDestroy(block: Block): Boolean
+    fun getDurability(): Int
+    fun getDamage(): Int
+    fun setDamage(damage: Int): Item
+    fun getMaxDamage(): Int
+    fun isDamagable(): Boolean
     fun getLore(): List<String>
     fun draw(x: Float, y: Float, scale: Float = definedExternally)
     override fun equals(other: Any?): Boolean
@@ -573,48 +574,48 @@ external class PlayerMP(player: dynamic) : Entity {
 }
 external class PotionEffect(effect: dynamic) {
     fun getName(): String
-    fun getAmplifier()
-    fun getDuration()
+    fun getAmplifier(): Int
+    fun getDuration(): Int
     fun getID(): Int
-    fun isAmbient()
-    fun isDurationMax()
+    fun isAmbient(): Boolean
+    fun isDurationMax(): Boolean
     fun showsParticles(): Boolean
     override fun toString(): String
 }
 external object Player {
     fun getPlayer(): dynamic
-    fun getX()
-    fun getY()
-    fun getZ()
-    fun getMotionX()
-    fun getMotionY()
-    fun getMotionZ()
-    fun getPitch()
-    fun getYaw()
-    fun getRawYaw()
+    fun getX(): Double
+    fun getY(): Double
+    fun getZ(): Double
+    fun getMotionX(): Double
+    fun getMotionY(): Double
+    fun getMotionZ(): Double
+    fun getPitch(): Float
+    fun getYaw(): Float
+    fun getRawYaw(): Float
     fun getName(): String
     fun getUUID(): String
-    fun getHP()
-    fun getHunger()
-    fun getSaturation()
-    fun getArmorPoints()
-    fun getAirLevel()
-    fun getXPLevel()
-    fun getXPProgress()
+    fun getHP(): Float
+    fun getHunger(): Int
+    fun getSaturation(): Int
+    fun getArmorPoints(): Int
+    fun getAirLevel(): Int
+    fun getXPLevel(): Int
+    fun getXPProgress(): Float
     fun getBiome(): String
-    fun getLightLevel()
-    fun isSneaking()
-    fun isSprinting()
-    fun isFlying()
-    fun isSleeping()
+    fun getLightLevel(): Int
+    fun isSneaking(): Boolean
+    fun isSprinting(): Boolean
+    fun isFlying(): Boolean
+    fun isSleeping(): Boolean
     fun facing(): String
     fun getActivePotionEffects(): List<PotionEffect>
     fun lookingAt(): Any
-    fun getHeldItem()
-    fun getInventory()
-    fun getDisplayName()
+    fun getHeldItem(): Item
+    fun getInventory(): Inventory
+    fun getDisplayName(): TextComponent
     fun setTabDisplayName(textComponent: TextComponent)
-    fun getOpenedInventory()
+    fun getOpenedInventory(): Inventory
     object armor {
         fun getHelmet(): Item
         fun getChestplate(): Item
@@ -623,17 +624,17 @@ external object Player {
     }
 }
 external object Scoreboard {
-    fun getScoreboardTitle()
+    fun getScoreboardTitle(): String
     fun getTitle(): String
-    fun getLines(descending: Boolean = definedExternally): List<Score>
-    fun getLineByIndex(index: Int)
-    fun getLinesByScore(score: Int)
+    fun getLines(descending: Boolean = definedExternally): List<dynamic>
+    fun getLineByIndex(index: Int): dynamic
+    fun getLinesByScore(score: Int): List<dynamic>
     fun setLine(score: Int, line: String, override: Boolean)
     fun setShouldRender(shouldRender: Boolean)
     fun getShouldRender()
     fun resetCache()
     class Score(score: dynamic) {
-        fun getPoints()
+        fun getPoints(): Int
         fun getName(): String
         override fun toString(): String
     }
@@ -687,13 +688,13 @@ external object World {
     }
 }
 external class OnChatTrigger(method: Any, type: dynamic, loader: dynamic) : OnTrigger {
-    fun triggerIfCanceled(bool: Boolean)
-    fun setChatCriteria(chatCriteria: String)
+    fun triggerIfCanceled(bool: Boolean): OnChatTrigger
+    fun setChatCriteria(chatCriteria: String): OnChatTrigger
     fun setCriteria(chatCriteria: String)
-    fun setParameter(parameter: String)
-    fun setParameters(vararg parameters: String)
-    fun addParameter(parameter: String)
-    fun addParameters(vararg parameters: String)
+    fun setParameter(parameter: String): OnChatTrigger
+    fun setParameters(vararg parameters: String): OnChatTrigger
+    fun addParameter(parameter: String): OnChatTrigger
+    fun addParameters(vararg parameters: String): OnChatTrigger
     override fun trigger(vararg args: Any?)
     enum class Parameter {
         CONTAINS, START, END;
@@ -702,29 +703,29 @@ external class OnChatTrigger(method: Any, type: dynamic, loader: dynamic) : OnTr
 }
 external class OnCommandTrigger(method: Any, loader: dynamic) : OnTrigger {
     override fun trigger(vararg args: Any?)
-    fun setCommandName(commandName: String)
+    fun setCommandName(commandName: String): OnCommandTrigger
     fun setName(commandName: String)
 }
 external class OnRegularTrigger(method: Any, triggerType: dynamic, loader: dynamic) : OnTrigger {
     override fun trigger(vararg args: Any?)
 }
 external class OnRenderTrigger(method: Any, triggerType: dynamic, loader: dynamic) : OnTrigger {
-    fun triggerIfCanceled(bool: Boolean)
+    fun triggerIfCanceled(bool: Boolean): OnRenderTrigger
     override fun trigger(vararg args: Any?)
 }
 external class OnSoundPlayTrigger(method: Any, loader: dynamic) : OnTrigger {
-    fun setCriteria(soundNameCriteria: String)
+    fun setCriteria(soundNameCriteria: String): OnSoundPlayTrigger
     override fun trigger(vararg args: Any?)
 }
 external class OnStepTrigger(method: Any, loader: dynamic) : OnTrigger {
-    fun setFps(fps: Long)
-    fun setDelay(delay: Long)
+    fun setFps(fps: Long): OnStepTrigger
+    fun setDelay(delay: Long): OnStepTrigger
     override fun trigger(vararg args: Any?)
 }
 abstract external class OnTrigger(method: Any, type: dynamic, loader: dynamic) {
     fun setPriority(priority: Priority): OnTrigger
-    fun register()
-    fun unregister()
+    fun register(): OnTrigger
+    fun unregister(): OnTrigger
     fun callMethod(vararg args: Any?)
     abstract fun trigger(vararg args: Any?)
     enum class TriggerResult {
