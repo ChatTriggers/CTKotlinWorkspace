@@ -1,5 +1,5 @@
 group 'org.example'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 buildscript {
     ext.kotlin_version = '1.2.61'
@@ -21,21 +21,39 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
 }
 
+compileKotlin2Js {
+    kotlinOptions.metaInfo = false
+}
+
+processResources {
+    filter { String line -> line.replace("@MODULE_VERSION@", version as String) }
+}
+
+task generateMetadata(type: Copy) {
+    from "src/main/kotlin/resources/metadata.json"
+    into modulesDir
+    filter { line -> line.replaceAll("@MODULE_VERSION@", version as String) }
+}
+
 task assembleWeb(type: Sync) {
     configurations.compile.each { file ->
         from(zipTree(file.absolutePath), {
             includeEmptyDirs = false
             include { fileTreeElement ->
                 def path = fileTreeElement.path
-                path.endsWith(".js") && (path.startsWith("META-INF/resources/") ||
-                        !path.startsWith("META-INF/"))
+                path.endsWith(".js") &&
+                        (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/")) &&
+                        !path.endsWith(".meta.js") &&
+                        !path.startsWith("kotlin.js")
             }
         })
     }
     from compileKotlin2Js.destinationDir
-    into "${projectDir}/web"
+    into modulesDir
 
     dependsOn classes
+    dependsOn 'generateMetadata'
+    tasks.findByName('generateMetadata').mustRunAfter classes
 }
 
 assemble.dependsOn assembleWeb

@@ -1,0 +1,9 @@
+{
+  "name": "&6Example Module",
+  "description": "Does example things",
+  "requires": [
+    "kotlin"
+  ],
+  "author": "example person",
+  "version": "@MODULE_VERSION@"
+}
