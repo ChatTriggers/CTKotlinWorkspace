@@ -166,7 +166,8 @@ external object Tessellator {
     fun draw()
     fun drawString(text: String, x: Float, y: Float, z: Float, renderBlackBox: Boolean, partialTicks: Float, scale: Float, color: Int, increase: Boolean)
 }
-abstract external class XMLHttpRequest {
+external class XMLHttpRequest {
+    fun open(method: String, urlStr: String, async: Boolean)
     fun addRequestHeader(key: String, value: String)
     fun setCallbackMethod(method: Any)
     fun send(vararg parameters: String)
@@ -181,6 +182,8 @@ external class Book(bookName: String) {
     fun display(page: Int = definedExternally)
     fun isOpen(): Boolean
     fun getCurrentPage(): Int
+    fun set(tag: String, value: dynamic)
+    fun get(tag: String): dynamic
 }
 external object CPS {
     fun update(event: dynamic)
@@ -192,7 +195,7 @@ external object CPS {
     fun getLeftClicksAverage(): Int
     fun getRightClicksAverage(): Int
 }
-abstract external class Display {
+external class Display {
     constructor()
     constructor(any: dynamic)
     fun getBackgroundColor(): Int
@@ -240,7 +243,7 @@ external object DisplayHandler {
         UP, DOWN;
     }
 }
-abstract external class DisplayLine {
+external class DisplayLine {
     constructor(text: String)
     constructor(text: String, config: dynamic)
     fun getText(): Text
@@ -264,12 +267,13 @@ abstract external class DisplayLine {
     fun drawCenter(x: Float, y: Float, maxWidth: Float, background: DisplayHandler.Background, backgroundColor: Int, textColor: Int)
     override fun toString(): String
 }
-abstract external class Gui  {
+external class Gui  {
+    fun open()
     fun close()
-    fun isOpen()
-    fun isControlDown()
-    fun isShiftDown()
-    fun isAltDown()
+    fun isOpen(): Boolean
+    fun isControlDown(): Boolean
+    fun isShiftDown(): Boolean
+    fun isAltDown(): Boolean
     fun registerDraw(method: Any): OnRegularTrigger?
     fun registerClicked(method: Any): OnRegularTrigger?
     fun registerKeyTyped(method: Any): OnRegularTrigger?
@@ -388,6 +392,7 @@ external object Client {
     fun setCurrentChatMessage(message: String)
     object gui {
         fun getClassName(): String
+        fun get(): dynamic
         fun close()
     }
     object camera {
