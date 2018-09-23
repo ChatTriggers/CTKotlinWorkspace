@@ -4,23 +4,25 @@ import kotlin.math.floor
 val shapes = mutableListOf<Circle>()
 
 fun main(args: Array<String>) {
-    (register("command") {
+    command("addCircle") {
         shapes.add(Circle(randWidth(), randHeight(), randDelta(), randDelta()))
-    } as OnCommandTrigger).setName("addCircle")
+    }
 
-    (register("command") {
+    command("addCircles") {
         for (i in 0..arguments[0].toString().toInt()) {
             shapes.add(Circle(randWidth(), randHeight(), randDelta(), randDelta()))
         }
-    } as OnCommandTrigger).setName("addCircles")
+    }
 
     register("renderOverlay") {
         shapes.forEach { it.draw() }
     }
 
-    (register("step") {
+    register("step") {
         shapes.forEach { it.update() }
-    } as OnStepTrigger).setFps(120)
+    }.to<OnStepTrigger> {
+        setFps(120)
+    }
 }
 
 fun randWidth() = random(Renderer.screen.getWidth())
